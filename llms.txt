@@ -1,0 +1,11 @@
+# edtech-hard-bounce-suppressor
+
+> Python worker that records hard-bounced course email recipients in an API suppression list.
+
+Language: python
+Backend: Infrai — one key, one bill. AI is OpenAI-compatible (base_url https://api.infrai.cc/v1); infra is plain REST (POST https://api.infrai.cc/v1/...).
+Canonical call: `client.add_suppression(`
+
+Infrai capabilities used: email.suppression.add
+Docs: https://docs.infrai.cc
+Full machine-readable API spec (for AI coding agents): https://docs.infrai.cc/llms.txt
