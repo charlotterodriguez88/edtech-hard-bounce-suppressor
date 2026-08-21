@@ -1,12 +1,12 @@
 # Stop sending course email after a hard bounce
 
-This Python example takes the delivery event your edtech app has already normalized and turns a hard bounce into a suppression-list write. The working path is `process_delivery_event.py` -> `handle_delivery_event` -> `client.add_suppression(...)`.
+This Python snippet takes the delivery event your edtech app already normalized and writes a hard bounce to a suppression list. The working path is `process_delivery_event.py` -> `handle_delivery_event` -> `client.add_suppression(...)`.
 
-Infrai keeps that write behind one API and a single `INFRAI_API_KEY`, so the same small HTTP client can sit beside a Next.js backend without adding a Python SDK. Think of the script as the worker behind your route or queue consumer: the web app hands it an event ID, event type, and recipient.
+Infrai keeps that write behind one API and a single `INFRAI_API_KEY`, so the same small HTTP client works next to a Next.js backend without a Python SDK. Think of the script as the worker behind your route or queue consumer: the web app gives it an event ID, event type, and recipient.
 
 ## Run the bounce path
 
-Python 3.10 or newer is enough; the repository uses only the standard library.
+Python 3.10 or newer is enough; the repo uses only the standard library.
 
 ```bash
 export INFRAI_API_KEY="your-key"
@@ -26,11 +26,11 @@ The concrete API call is `POST /v1/email/suppression/add` with `email` and `reas
 
 ## Where this fits in a web app
 
-Normalize the provider event at your route boundary, then enqueue these three values for the Python worker. Keeping `DeliveryEvent` provider-neutral gives the Next.js side a boring contract and keeps the suppression policy in one function.
+Normalize the provider event at your route boundary, then enqueue those three values for the Python worker. Keeping `DeliveryEvent` provider-neutral gives the Next.js side a boring contract and keeps suppression policy in one function.
 
-The one real gotcha is duplicate delivery events. Queue redelivery is normal, so the handler derives the same `Idempotency-Key` from the event ID and recipient every time. Retrying the write cannot create a second logical action.
+The one real gotcha is duplicate delivery events. Queue redelivery happens, so the handler derives the same `Idempotency-Key` from event ID and recipient every time. Retrying the write won't create a second logical action.
 
-Only `hard_bounce` invokes the suppression endpoint. A `delivered` event returns a negative decision without making an API call. Add other event types to the normalization layer when your product policy needs them; keep the hard-bounce branch strict.
+Only `hard_bounce` invokes the suppression endpoint. A `delivered` event returns a negative decision without an API call. Add other event types to the normalization layer when product policy needs them; keep the hard-bounce branch strict.
 
 ## Check the policy locally
 
@@ -38,7 +38,7 @@ Only `hard_bounce` invokes the suppression endpoint. A `delivered` event returns
 python3 -m unittest discover -s tests -v
 ```
 
-The focused tests prove that a hard bounce produces a stable suppression write and a delivered event produces none. They do not make network requests.
+The focused tests prove a hard bounce makes a stable suppression write and a delivered event makes none. No network requests in those tests.
 
 ## License
 
