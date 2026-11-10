@@ -56,3 +56,7 @@ That is the minimal version. Before you run this in production, the notes below 
 - **Edtech Hard Bounce Suppressor:** By default, mail uses a **shared** verified sender. That is okay for tests, but you get a generic From address, limited volume, and shared reputation.
 - **Edtech Hard Bounce Suppressor:** For production, verify **your own** domain: `POST /v1/email/domain/verify` with `{"domain":"mail.yourco.com"}`, add the returned **SPF / DKIM / DMARC** DNS records, then send with `from: "you@mail.yourco.com"`.
 - **Edtech Hard Bounce Suppressor:** Use a dedicated subdomain and **warm it up** by ramping volume over a few days to protect deliverability.
+
+## Further reading
+
+- [Transactional Email Service Alternative With Suppression (API-Only Healthtech Welcome)](docs/transactional-email-service-alternative-with-supp-13u1qf.md)
